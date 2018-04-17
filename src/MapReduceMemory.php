@@ -28,7 +28,7 @@ class MapReduceMemory extends Base
 
         $key = array_keys($this->values)[0];
         $ret = [$key, $this->values[$key]];
-        unset($this->values, $key);
+        unset($this->values[$key]);
         return $ret;
     }
 }

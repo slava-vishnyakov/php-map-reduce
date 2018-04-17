@@ -52,9 +52,46 @@ class MapReduceTest extends TestCase
     }
 
     /** @test */
+    public function works_3_memory()
+    {
+        $m = new MapReduceMemory();
+        $m->send('a', 1);
+        $m->send('b', 1);
+        $m->send('c', ['c']);
+        $m->send('a', 2);
+
+        $this->assertEquals(['a', [1, 2]], $m->next());
+        $this->assertEquals(['b', [1]], $m->next());
+        $this->assertEquals(['c', [['c']]], $m->next());
+        $this->assertEquals(null, $m->next());
+    }
+
+    /** @test */
     public function it_iterates()
     {
         $m = new MapReduceProcess();
+        $m->send('a', 1);
+        $m->send('b', 1);
+        $m->send('c', 3);
+        $m->send('a', 2);
+
+        foreach($m->iter() as $key => $groups) {
+            if($key == 'a') {
+                $this->assertEquals([1,2], $groups);
+            } elseif($key == 'b') {
+                $this->assertEquals([1], $groups);
+            } elseif($key == 'c') {
+                $this->assertEquals([3], $groups);
+            } else {
+                $this->fail("Shouldn't be other keys");
+            }
+        }
+    }
+
+    /** @test */
+    public function it_iterates_memory()
+    {
+        $m = new MapReduceMemory();
         $m->send('a', 1);
         $m->send('b', 1);
         $m->send('c', 3);
