@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bomboze
- * Date: 17/04/2018
- * Time: 19:32
- */
 
 namespace SlavaVishnyakov\MapReduce;
 
@@ -75,12 +69,12 @@ class MapReduceTest extends TestCase
         $m->send('c', 3);
         $m->send('a', 2);
 
-        foreach($m->iter() as $key => $groups) {
-            if($key == 'a') {
-                $this->assertEquals([1,2], $groups);
-            } elseif($key == 'b') {
+        foreach ($m->iter() as $key => $groups) {
+            if ($key == 'a') {
+                $this->assertEquals([1, 2], $groups);
+            } elseif ($key == 'b') {
                 $this->assertEquals([1], $groups);
-            } elseif($key == 'c') {
+            } elseif ($key == 'c') {
                 $this->assertEquals([3], $groups);
             } else {
                 $this->fail("Shouldn't be other keys");
@@ -97,16 +91,24 @@ class MapReduceTest extends TestCase
         $m->send('c', 3);
         $m->send('a', 2);
 
-        foreach($m->iter() as $key => $groups) {
-            if($key == 'a') {
-                $this->assertEquals([1,2], $groups);
-            } elseif($key == 'b') {
+        foreach ($m->iter() as $key => $groups) {
+            if ($key == 'a') {
+                $this->assertEquals([1, 2], $groups);
+            } elseif ($key == 'b') {
                 $this->assertEquals([1], $groups);
-            } elseif($key == 'c') {
+            } elseif ($key == 'c') {
                 $this->assertEquals([3], $groups);
             } else {
                 $this->fail("Shouldn't be other keys");
             }
         }
+    }
+
+    /** @test */
+    public function memory_accepts_jsonable()
+    {
+        $m = new MapReduceMemory();
+        $m->send([1, 2], 1);
+        $this->assertEquals([[1, 2], [1]], $m->next());
     }
 }

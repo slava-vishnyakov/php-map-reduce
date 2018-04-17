@@ -13,6 +13,8 @@ class MapReduceMemory extends Base
 
     public function send($key, $value)
     {
+        $key = json_encode($key);
+
         if(!array_key_exists($key, $this->values)) {
             $this->values[$key] = [];
         }
@@ -27,7 +29,8 @@ class MapReduceMemory extends Base
         }
 
         $key = array_keys($this->values)[0];
-        $ret = [$key, $this->values[$key]];
+
+        $ret = [json_decode($key), $this->values[$key]];
         unset($this->values[$key]);
         return $ret;
     }
