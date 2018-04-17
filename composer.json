@@ -1,6 +1,7 @@
 {
   "name": "slava-vishnyakov/map-reduce",
   "description": "MapReduce implementation",
+  "license": "MIT",
   "require": {
   },
   "autoload": {
