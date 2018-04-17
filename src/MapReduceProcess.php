@@ -73,4 +73,11 @@ class MapReduceProcess
         return [$this->key, $this->buffer];
 
     }
+
+    public function iter()
+    {
+        while(($pair = $this->next()) !== null) {
+            yield $pair[0] => $pair[1];
+        }
+    }
 }
