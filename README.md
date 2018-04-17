@@ -1,1 +1,4 @@
-# php-map-reduce
+```
+composer require slava-vishnyakov/map-reduce
+```
+
