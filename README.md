@@ -3,6 +3,8 @@ composer require slava-vishnyakov/map-reduce
 ```
 
 ```php
+use \SlavaVishnyakov\MapReduce\MapReduceMemory;
+
 $m = new MapReduceMemory(); // or MapReduceProcess
 $m->send('a', 1);
 $m->send('b', 1);
