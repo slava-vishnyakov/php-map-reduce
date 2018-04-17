@@ -1,0 +1,14 @@
+{
+  "name": "slava-vishnyakov/map-reduce",
+  "description": "MapReduce implementation",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "SlavaVishnyakov\\MapReduce\\": "src"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6"
+  }
+}
