@@ -2,10 +2,14 @@
 
 namespace SlavaVishnyakov\MapReduce;
 
-class MapReduceProcess
+class MapReduceProcess extends Base
 {
-    public $key = null;
-    public $buffer = [];
+    private $currentKey = null;
+    private $buffer = [];
+    private $process;
+    private $wroteEof = false;
+    private $pipes;
+    private $done = false;
 
     public function __construct()
     {
@@ -50,15 +54,15 @@ class MapReduceProcess
         do {
             $line = trim(fgets($this->pipes[1]));
             if($line) {
-                [$key, $value] = json_decode($line);
+                list($key, $value) = json_decode($line);
                 $value = unserialize($value);
 
-                if ($key == $this->key) {
+                if ($key == $this->currentKey) {
                     $this->buffer [] = $value;
                 } else { // key changed -> return
-                    $ret = [$this->key, $this->buffer];
+                    $ret = [$this->currentKey, $this->buffer];
 
-                    $this->key = $key;
+                    $this->currentKey = $key;
                     $this->buffer = [$value];
 
                     if ($ret[0] !== null) {
@@ -70,14 +74,8 @@ class MapReduceProcess
 
         // feof, so return last value
         $this->done = true;
-        return [$this->key, $this->buffer];
+        return [$this->currentKey, $this->buffer];
 
     }
 
-    public function iter()
-    {
-        while(($pair = $this->next()) !== null) {
-            yield $pair[0] => $pair[1];
-        }
-    }
 }

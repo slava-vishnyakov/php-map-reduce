@@ -2,8 +2,10 @@
 
 namespace SlavaVishnyakov\MapReduce;
 
-class MapReduceMemory
+class MapReduceMemory extends Base
 {
+    private $values = [];
+
     public function __construct()
     {
         $this->values = [];
