@@ -1,3 +1,5 @@
+To install:
+
 ```
 composer require slava-vishnyakov/map-reduce
 ```
