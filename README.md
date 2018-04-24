@@ -31,7 +31,7 @@ $m->next() ==> ['b', [1]]
 $m->next() ==> null
 ```
 
-There are two implementations `MapReduceMemory` and `MapReduceMemory`.
+There are two implementations `MapReduceMemory` and `MapReduceProcess`.
 
 The first does all sorting in memory, the second is for memory-hungry workloads, uses `/usr/bin/sort` to 
 process basically unlimited amount of data.
